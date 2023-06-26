@@ -1,4 +1,5 @@
 import { Grid, GridError } from './grid';
+import { InitialRobotPosition, Robot } from './robot';
 
 describe('Grid', () => {
   describe('validation', () => {
@@ -14,6 +15,38 @@ describe('Grid', () => {
       expect(() => {
         new Grid(50, 50);
       }).not.toThrow();
+    });
+  });
+
+  describe('adding a robot to the Grid', () => {
+    it('throws a GridError if a robot is added outside of the Grid', () => {
+      const grid = new Grid(4, 4);
+
+      const robotPosition: InitialRobotPosition = {
+        x: 5,
+        y: 5,
+        orientation: 'N',
+      };
+
+      const robot = new Robot(robotPosition);
+
+      expect(() => grid.addRobot(robot)).toThrow(
+        new GridError('Robot has been initialised outside the grid!')
+      );
+    });
+
+    it('does not throw a GridError if a robot is added inside of the Grid', () => {
+      const grid = new Grid(4, 4);
+
+      const robotPosition: InitialRobotPosition = {
+        x: 3,
+        y: 3,
+        orientation: 'N',
+      };
+
+      const robot = new Robot(robotPosition);
+
+      expect(() => grid.addRobot(robot)).not.toThrow();
     });
   });
 });
