@@ -106,5 +106,28 @@ describe('Grid', () => {
         lost: true,
       });
     });
+
+    it('throws a Grid Error if an illegal command is given', () => {
+      const grid = new Grid(4, 4);
+
+      const robotPosition: RobotPosition = {
+        x: 1,
+        y: 1,
+        orientation: 'N',
+      };
+
+      const robot = new Robot(robotId, robotPosition);
+
+      grid.addRobot(robot);
+
+      const command = {
+        robot,
+        moves: 'X',
+      };
+
+      expect(() => grid.moveRobot(command)).toThrow(
+        new GridError('Invalid move - X Only F, R and L are allowed.')
+      );
+    });
   });
 });

@@ -124,6 +124,10 @@ export class Grid {
             newOrientation = 'S';
             break;
         }
+      } else {
+        throw new GridError(
+          `Invalid move - ${move} Only F, R and L are allowed.`
+        );
       }
     }
 
