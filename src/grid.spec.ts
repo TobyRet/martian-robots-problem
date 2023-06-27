@@ -32,7 +32,7 @@ describe('Grid', () => {
       const robot = new Robot(robotId, robotPosition);
 
       expect(() => grid.addRobot(robot)).toThrow(
-        new GridError('Robot has been initialised outside the grid!')
+        new GridError('Robot is outside the grid!')
       );
     });
 
@@ -76,6 +76,34 @@ describe('Grid', () => {
         x: 2,
         y: 1,
         orientation: 'N',
+      });
+    });
+
+    it('returns `lost: true` if the robot moves outside of the grid', () => {
+      const grid = new Grid(4, 4);
+
+      const robotPosition: RobotPosition = {
+        x: 1,
+        y: 1,
+        orientation: 'N',
+      };
+
+      const robot = new Robot(robotId, robotPosition);
+
+      grid.addRobot(robot);
+
+      const command = {
+        robot,
+        moves: 'FFFFF',
+      };
+
+      const finalPosition = grid.moveRobot(command);
+
+      expect(finalPosition).toEqual({
+        x: 1,
+        y: 6,
+        orientation: 'N',
+        lost: true,
       });
     });
   });

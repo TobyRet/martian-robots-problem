@@ -32,8 +32,10 @@ export class Grid {
   }
 
   addRobot(robot: Robot) {
-    if (robot.position.x > this.width || robot.position.y > this.height) {
-      throw new GridError('Robot has been initialised outside the grid!');
+    const inValidPosition = this.isRobotOutsideTheGrid(robot.position);
+
+    if (inValidPosition) {
+      throw new GridError('Robot is outside the grid!');
     }
 
     this.robotPositions[robot.id] = robot.position;
@@ -51,9 +53,20 @@ export class Grid {
       moves
     );
 
-    this.robotPositions[id] = newRobotPosition;
+    const inValidPosition = this.isRobotOutsideTheGrid(newRobotPosition);
 
-    return newRobotPosition;
+    if (inValidPosition) {
+      const lostRobotPosition = {
+        ...newRobotPosition,
+        lost: true,
+      };
+
+      this.robotPositions[id] = lostRobotPosition;
+      return lostRobotPosition;
+    } else {
+      this.robotPositions[id] = newRobotPosition;
+      return newRobotPosition;
+    }
   }
 
   private calculateNewRobotPosition(
@@ -119,5 +132,10 @@ export class Grid {
       y: newY,
       orientation: newOrientation,
     };
+  }
+
+  private isRobotOutsideTheGrid(position: RobotPosition) {
+    const { x, y } = position;
+    return x > this.width || y > this.height;
   }
 }
