@@ -46,6 +46,9 @@ export class Grid {
       robot: { id },
       moves,
     } = command;
+
+    this.validateCommand(command);
+
     const currentRobotPosition = this.robotPositions[id];
 
     const newRobotPosition = this.calculateNewRobotPosition(
@@ -141,5 +144,12 @@ export class Grid {
   private isRobotOutsideTheGrid(position: RobotPosition) {
     const { x, y } = position;
     return x > this.width || y > this.height;
+  }
+
+  private validateCommand(command: RobotCommand) {
+    const { moves } = command;
+    if (moves.length > 100) {
+      throw new GridError('Command length exceeds 100 characters');
+    }
   }
 }

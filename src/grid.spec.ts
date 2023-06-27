@@ -3,7 +3,7 @@ import { Robot, RobotPosition } from './robot';
 
 describe('Grid', () => {
   const robotId = 1;
-  describe('validation', () => {
+  describe('initialisation', () => {
     it('throws an error if the grid is initialised but exceeds the maximum width and height allowed', () => {
       expect(() => {
         new Grid(51, 51);
@@ -107,7 +107,7 @@ describe('Grid', () => {
       });
     });
 
-    it('throws a Grid Error if an illegal command is given', () => {
+    it('throws a error if an illegal command is given', () => {
       const grid = new Grid(4, 4);
 
       const robotPosition: RobotPosition = {
@@ -127,6 +127,29 @@ describe('Grid', () => {
 
       expect(() => grid.moveRobot(command)).toThrow(
         new GridError('Invalid move - X Only F, R and L are allowed.')
+      );
+    });
+
+    it('throws an error if the command is greater than 100 characters', () => {
+      const grid = new Grid(4, 4);
+
+      const robotPosition: RobotPosition = {
+        x: 1,
+        y: 1,
+        orientation: 'N',
+      };
+
+      const robot = new Robot(robotId, robotPosition);
+
+      grid.addRobot(robot);
+
+      const command = {
+        robot,
+        moves: 'FRFL'.repeat(26),
+      };
+
+      expect(() => grid.moveRobot(command)).toThrow(
+        new GridError('Command length exceeds 100 characters')
       );
     });
   });
