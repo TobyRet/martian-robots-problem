@@ -1,13 +1,16 @@
 type RobotOrientation = 'N' | 'E' | 'S' | 'W';
 
-export type InitialRobotPosition = {
+export type RobotPosition = {
   x: number;
   y: number;
   orientation: RobotOrientation;
 };
 export class Robot {
-  public position: InitialRobotPosition;
-  constructor(position: InitialRobotPosition) {
+  public position: RobotPosition;
+  public id: number;
+
+  constructor(id: number, position: RobotPosition) {
     this.position = position;
+    this.id = id;
   }
 }

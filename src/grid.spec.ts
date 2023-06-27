@@ -1,7 +1,8 @@
 import { Grid, GridError } from './grid';
-import { InitialRobotPosition, Robot } from './robot';
+import { Robot, RobotPosition } from './robot';
 
 describe('Grid', () => {
+  const robotId = 1;
   describe('validation', () => {
     it('throws an error if the grid is initialised but exceeds the maximum width and height allowed', () => {
       expect(() => {
@@ -22,13 +23,13 @@ describe('Grid', () => {
     it('throws a GridError if a robot is added outside of the Grid', () => {
       const grid = new Grid(4, 4);
 
-      const robotPosition: InitialRobotPosition = {
+      const robotPosition: RobotPosition = {
         x: 5,
         y: 5,
         orientation: 'N',
       };
 
-      const robot = new Robot(robotPosition);
+      const robot = new Robot(robotId, robotPosition);
 
       expect(() => grid.addRobot(robot)).toThrow(
         new GridError('Robot has been initialised outside the grid!')
@@ -38,15 +39,44 @@ describe('Grid', () => {
     it('does not throw a GridError if a robot is added inside of the Grid', () => {
       const grid = new Grid(4, 4);
 
-      const robotPosition: InitialRobotPosition = {
+      const robotPosition: RobotPosition = {
         x: 3,
         y: 3,
         orientation: 'N',
       };
 
-      const robot = new Robot(robotPosition);
+      const robot = new Robot(robotId, robotPosition);
 
       expect(() => grid.addRobot(robot)).not.toThrow();
+    });
+  });
+
+  describe('moving a robot', () => {
+    it('returns the final position of the robot', () => {
+      const grid = new Grid(4, 4);
+
+      const robotPosition: RobotPosition = {
+        x: 1,
+        y: 1,
+        orientation: 'N',
+      };
+
+      const robot = new Robot(robotId, robotPosition);
+
+      grid.addRobot(robot);
+
+      const command = {
+        robot,
+        moves: 'RFL',
+      };
+
+      const finalPosition = grid.moveRobot(command);
+
+      expect(finalPosition).toEqual({
+        x: 2,
+        y: 1,
+        orientation: 'N',
+      });
     });
   });
 });
