@@ -1,18 +1,6 @@
-import { Robot, RobotPosition } from './robot';
-
-type RobotCommand = {
-  robot: Robot;
-  moves: string;
-};
-
-export class GridError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'GridError';
-  }
-}
-
-type RobotPositions = { [key: number]: RobotPosition };
+import { GridError } from './errors';
+import { RobotCommand, RobotPosition, RobotPositions } from '../robot/types';
+import { Robot } from '../robot/robot';
 
 export class Grid {
   private MAX_WIDTH = 50;

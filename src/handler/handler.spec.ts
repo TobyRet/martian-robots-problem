@@ -1,5 +1,5 @@
 import { handler, resetGrid } from './handler';
-import { GridError } from './grid';
+import { GridError } from '../grid/errors';
 
 describe('handler', () => {
   beforeEach(() => {

@@ -1,11 +1,5 @@
-export type RobotOrientation = 'N' | 'E' | 'S' | 'W';
+import { RobotPosition } from './types';
 
-export type RobotPosition = {
-  x: number;
-  y: number;
-  orientation: RobotOrientation;
-  lost?: boolean;
-};
 export class Robot {
   public position: RobotPosition;
   public id: number;

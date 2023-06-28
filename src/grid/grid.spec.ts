@@ -1,5 +1,7 @@
-import { Grid, GridError } from './grid';
-import { Robot, RobotPosition } from './robot';
+import { Grid } from './grid';
+import { GridError } from './errors';
+import { RobotPosition } from '../robot/types';
+import { Robot } from '../robot/robot';
 
 describe('Grid', () => {
   const robotId = 1;

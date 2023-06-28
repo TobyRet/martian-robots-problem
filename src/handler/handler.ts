@@ -1,5 +1,6 @@
-import { Grid } from './grid';
-import { Robot, RobotOrientation } from './robot';
+import { Grid } from '../grid/grid';
+import { RobotOrientation } from '../robot/types';
+import { Robot } from '../robot/robot';
 
 let grid = new Grid();
 
