@@ -1,9 +1,10 @@
-type RobotOrientation = 'N' | 'E' | 'S' | 'W';
+export type RobotOrientation = 'N' | 'E' | 'S' | 'W';
 
 export type RobotPosition = {
   x: number;
   y: number;
   orientation: RobotOrientation;
+  lost?: boolean;
 };
 export class Robot {
   public position: RobotPosition;

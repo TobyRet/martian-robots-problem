@@ -3,25 +3,35 @@ import { Robot, RobotPosition } from './robot';
 
 describe('Grid', () => {
   const robotId = 1;
+
+  const create4x4Grid = () => {
+    const grid = new Grid();
+    grid.initialise(4, 4);
+    return grid;
+  };
   describe('initialisation', () => {
     it('throws an error if the grid is initialised but exceeds the maximum width and height allowed', () => {
+      const grid = new Grid();
+
       expect(() => {
-        new Grid(51, 51);
+        grid.initialise(51, 51);
       }).toThrow(
         new GridError('Grid size exceeds maximum allowed size of 50x50')
       );
     });
 
     it('does not throw an error if the grid is initialised and does not exceed the maximum width and height allowed', () => {
+      const grid = new Grid();
+
       expect(() => {
-        new Grid(50, 50);
+        grid.initialise(50, 50);
       }).not.toThrow();
     });
   });
 
   describe('adding a robot to the Grid', () => {
     it('throws a GridError if a robot is added outside of the Grid', () => {
-      const grid = new Grid(4, 4);
+      const grid = create4x4Grid();
 
       const robotPosition: RobotPosition = {
         x: 5,
@@ -32,12 +42,12 @@ describe('Grid', () => {
       const robot = new Robot(robotId, robotPosition);
 
       expect(() => grid.addRobot(robot)).toThrow(
-        new GridError('Robot is outside the grid!')
+        new GridError('Robot has been initialised outside the grid!')
       );
     });
 
     it('does not throw a GridError if a robot is added inside of the Grid', () => {
-      const grid = new Grid(4, 4);
+      const grid = create4x4Grid();
 
       const robotPosition: RobotPosition = {
         x: 3,
@@ -53,7 +63,7 @@ describe('Grid', () => {
 
   describe('moving a robot', () => {
     it('returns the final position of the robot', () => {
-      const grid = new Grid(4, 4);
+      const grid = create4x4Grid();
 
       const robotPosition: RobotPosition = {
         x: 1,
@@ -80,7 +90,7 @@ describe('Grid', () => {
     });
 
     it('returns `lost: true` if the robot moves outside of the grid', () => {
-      const grid = new Grid(4, 4);
+      const grid = create4x4Grid();
 
       const robotPosition: RobotPosition = {
         x: 1,
@@ -108,7 +118,7 @@ describe('Grid', () => {
     });
 
     it('throws a error if an illegal command is given', () => {
-      const grid = new Grid(4, 4);
+      const grid = create4x4Grid();
 
       const robotPosition: RobotPosition = {
         x: 1,
@@ -131,7 +141,7 @@ describe('Grid', () => {
     });
 
     it('throws an error if the command is greater than 100 characters', () => {
-      const grid = new Grid(4, 4);
+      const grid = create4x4Grid();
 
       const robotPosition: RobotPosition = {
         x: 1,

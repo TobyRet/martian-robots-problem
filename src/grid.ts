@@ -18,10 +18,10 @@ export class Grid {
   private MAX_WIDTH = 50;
   private MAX_HEIGHT = 50;
   private robotPositions: RobotPositions = {};
-  public width: number;
-  public height: number;
+  public width = 0;
+  public height = 0;
 
-  constructor(width: number, height: number) {
+  initialise(width: number, height: number) {
     if (width > this.MAX_WIDTH || height > this.MAX_HEIGHT) {
       throw new GridError(
         `Grid size exceeds maximum allowed size of ${this.MAX_HEIGHT}x${this.MAX_WIDTH}`
@@ -35,7 +35,7 @@ export class Grid {
     const inValidPosition = this.isRobotOutsideTheGrid(robot.position);
 
     if (inValidPosition) {
-      throw new GridError('Robot is outside the grid!');
+      throw new GridError('Robot has been initialised outside the grid!');
     }
 
     this.robotPositions[robot.id] = robot.position;
